@@ -7,28 +7,32 @@ const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
 //Register a User
-exports.registerUser = catchAsyncErrors( async(req,res,next) =>{
-    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-       folder: "avatars",
-       width: 150,
-       crop: "scale",
-    }); 
+exports.registerUser =async(req,res,next) =>{
+    try {
+      const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+     }); 
 
-    const {name,email,password} = req.body;
+     const {name,email,password} = req.body;
+     
+     const user = await User.create({
+         name,
+         email,
+         password,
+         avatar: {
+           public_id: myCloud.public_id,
+           url: myCloud.secure_url,
+         },
+     });
+ 
+     sendToken(user,201,res);
+    } catch (error) {
+      console.log(error)
+    }
     
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar: {
-          public_id: myCloud.public_id,
-          url: myCloud.secure_url,
-        },
-    });
-
-    sendToken(user,201,res);
-    
-});
+  }
 
 //Login User
 exports.loginUser = catchAsyncErrors (async (req,res,next)=>{
@@ -107,7 +111,7 @@ exports.forgotPassword = catchAsyncErrors(async(req,res,next)=> {
     user.resetPasswordExpire = undefined;
 
     await user.save({ validateBeforeSave: false });
-
+    console.log(error)
     return next(new ErrorHandler(error.message,500));
   }
 });
@@ -182,7 +186,7 @@ exports.updateProfile = catchAsyncErrors(async(req,res,next) =>{
     email: req.body.email,
   };
 
-  if(req.body.avatar !== ""){
+  if(req.body.avatar && req.body.avatar !== ""){
     const user = await User.findById(req.user.id);
 
     const imageId = user.avatar.public_id;
@@ -209,8 +213,8 @@ exports.updateProfile = catchAsyncErrors(async(req,res,next) =>{
   res.status(200).json({
     success: true,
   });
-});
-
+ });
+ 
 
 // Get all users
 exports.getAllUser = catchAsyncErrors(async (req, res, next) => {

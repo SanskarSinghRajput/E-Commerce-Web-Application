@@ -18,18 +18,25 @@ const UpdateProfile = ({ history }) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const updateProfileSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    // const myForm = new FormData();
 
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("avatar", avatar);
-    dispatch(updateProfile(myForm));
+    // myForm.set("name", name);
+    // myForm.set("email", email);
+    // myForm.set("avatar", avatar);
+    
+    const data ={
+      "name":name,
+      "email":email,
+      "avatar":avatar
+    }
+    console.log(data)
+    dispatch(updateProfile(data));
   };
 
   const updateProfileDataChange = (e) => {

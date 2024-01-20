@@ -2,6 +2,7 @@ const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
+const cloudinary  = require('cloudinary')
 
 // Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -109,7 +110,6 @@ exports.getProductDetails = catchAsyncErrors(async(req,res,next)=>{
 });
 
 // Update Product -- Admin
-
 exports.updateProduct = catchAsyncErrors(async(req,res,next)=>{
 
     let product = await Product.findById(req.params.id);
@@ -149,7 +149,7 @@ exports.updateProduct = catchAsyncErrors(async(req,res,next)=>{
       req.body.images = imagesLinks;
     }  
 
-    product = await Product.findByIdAndUpdate(req.params.id,req.body,{
+    product = await Product.findOneAndUpdate({"_id" : req.params.id},req.body,{
         new:true,
         runValidators:true,
         useFindAndModify:false,
@@ -261,8 +261,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
    }
 
    const numOfReviews = reviews.length;
-
-   await product.findByIdAndUpdate(req.query.productId, {
+   await Product.findByIdAndUpdate(req.query.productId, {
     reviews,
     ratings,
     numOfReviews,

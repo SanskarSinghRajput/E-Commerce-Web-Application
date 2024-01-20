@@ -57,11 +57,12 @@ const Dashboard = () => {
     datasets: [
       {
         backgroundColor: ["#00A6B4", "#6800B4"],
-        hoverBackgroundColor: ["#4B5000", "#35014F"],
+        hoverBackgroundColor: ["#4B5000", "#35014F"], 
         data: [outOfStock, products ? products.length - outOfStock : 0], // Check if products is defined
       },
     ],
   };
+  
 
   return (
     <div className="dashboard">
