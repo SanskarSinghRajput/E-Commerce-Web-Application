@@ -5,6 +5,7 @@ import { FiShoppingBag } from "react-icons/fi";
 import logo from "../../../images/logo.png";
 
 const options = {
+  burgerColor: "#eb4034",
   burgerColorHover: "#eb4034",
   logo,
   logoWidth: "20vmax",

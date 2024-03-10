@@ -57,14 +57,14 @@ const ProductList = ({ history }) => {
     {
       field: "name",
       headerName: "Name",
-      minWidth: 350,
+      minWidth: 200,
       flex: 1,
     },
     {
       field: "stock",
       headerName: "Stock",
       type: "number",
-      minWidth: 150,
+      minWidth: 100,
       flex: 0.3,
     },
 
@@ -72,7 +72,7 @@ const ProductList = ({ history }) => {
       field: "price",
       headerName: "Price",
       type: "number",
-      minWidth: 270,
+      minWidth: 170,
       flex: 0.5,
     },
 
@@ -80,14 +80,14 @@ const ProductList = ({ history }) => {
       field: "actions",
       flex: 0.3,
       headerName: "Actions",
-      minWidth: 150,
+      minWidth: 100,
       type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
           <Fragment>
             <Link to={`/admin/product/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
+              <EditIcon/>
             </Link>
 
             <Button

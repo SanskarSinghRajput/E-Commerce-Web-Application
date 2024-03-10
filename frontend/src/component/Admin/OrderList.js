@@ -50,12 +50,12 @@ const OrderList = ({ history }) => {
   }, [dispatch, alert, error, deleteError, history, isDeleted]);
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "Order ID", minWidth: 200, flex: 1 },
 
     {
       field: "status",
       headerName: "Status",
-      minWidth: 150,
+      minWidth: 100,
       flex: 0.5,
       cellClassName: (params) => {
         return params.getValue(params.id, "status") === "Delivered"
@@ -67,7 +67,7 @@ const OrderList = ({ history }) => {
       field: "itemsQty",
       headerName: "Items Qty",
       type: "number",
-      minWidth: 150,
+      minWidth: 100,
       flex: 0.4,
     },
 
@@ -75,15 +75,15 @@ const OrderList = ({ history }) => {
       field: "amount",
       headerName: "Amount",
       type: "number",
-      minWidth: 270,
+      minWidth: 170,
       flex: 0.5,
     },
 
     {
       field: "actions",
-      flex: 0.3,
+      flex: 0.5,
       headerName: "Actions",
-      minWidth: 150,
+      minWidth: 100,
       type: "number",
       sortable: false,
       renderCell: (params) => {
